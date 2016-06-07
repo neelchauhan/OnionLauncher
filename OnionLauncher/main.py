@@ -20,7 +20,7 @@ class MainWindow(QMainWindow):
 		rows.reverse()
 
 		for row in rows:
-			self.twSettings.removeRow(int(row))
+			self.twSettings.removeRow(row)
 
 if __name__ == "__main__":
 	app = QApplication(sys.argv)
