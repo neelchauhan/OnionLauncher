@@ -38,7 +38,7 @@
        </spacer>
       </item>
       <item>
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="lblSwitchTor">
         <property name="text">
          <string>Tor Not Running</string>
         </property>

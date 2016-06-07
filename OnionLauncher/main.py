@@ -1,6 +1,7 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5.uic import loadUi
+from var import values
 
 class MainWindow(QMainWindow):
 	def __init__(self, *args):
@@ -32,7 +33,14 @@ class MainWindow(QMainWindow):
 			self.twSettings.removeRow(row)
 
 	def switchTor(self):
-		pass
+		if values["torEnabled"]:
+			values["torEnabled"] = False
+			self.btnSwitchTor.setText("Start Tor")
+			self.lblSwitchTor.setText("Tor Not Running")
+		else:
+			values["torEnabled"] = True
+			self.btnSwitchTor.setText("Stop Tor")
+			self.lblSwitchTor.setText("Tor Running")
 
 if __name__ == "__main__":
 	app = QApplication(sys.argv)
