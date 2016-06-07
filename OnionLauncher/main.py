@@ -8,6 +8,12 @@ class MainWindow(QMainWindow):
 
 		loadUi("ui_files/main.ui", self)
 
+		self.tbAdd.clicked.connect(self.addRow)
+
+	def addRow(self):
+		rowPos = self.twSettings.rowCount()
+		self.twSettings.insertRow(rowPos)
+
 if __name__ == "__main__":
 	app = QApplication(sys.argv)
 	mw = MainWindow()
