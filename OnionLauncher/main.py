@@ -9,10 +9,18 @@ class MainWindow(QMainWindow):
 		loadUi("ui_files/main.ui", self)
 
 		self.tbAdd.clicked.connect(self.addRow)
+		self.tbRemove.clicked.connect(self.removeRow)
 
 	def addRow(self):
 		rowPos = self.twSettings.rowCount()
 		self.twSettings.insertRow(rowPos)
+
+	def removeRow(self):
+		rows = sorted(set(index.row() for index in self.twSettings.selectedIndexes()))
+		rows.reverse()
+
+		for row in rows:
+			self.twSettings.removeRow(int(row))
 
 if __name__ == "__main__":
 	app = QApplication(sys.argv)
