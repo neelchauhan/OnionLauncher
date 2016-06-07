@@ -8,8 +8,17 @@ class MainWindow(QMainWindow):
 
 		loadUi("ui_files/main.ui", self)
 
-		self.tbAdd.clicked.connect(self.addRow)
-		self.tbRemove.clicked.connect(self.removeRow)
+		buttons = {
+			self.tbAdd: self.addRow,
+			self.tbRemove: self.removeRow,
+			self.btnSwitchTor: self.switchTor,
+		}
+
+		self.evAddClick(buttons)
+
+	def evAddClick(self, obj_dict):
+		for obj in obj_dict:
+			obj.clicked.connect(obj_dict[obj])
 
 	def addRow(self):
 		rowPos = self.twSettings.rowCount()
@@ -21,6 +30,9 @@ class MainWindow(QMainWindow):
 
 		for row in rows:
 			self.twSettings.removeRow(row)
+
+	def switchTor(self):
+		pass
 
 if __name__ == "__main__":
 	app = QApplication(sys.argv)
