@@ -32,6 +32,15 @@ class MainWindow(QMainWindow):
 		for row in rows:
 			self.twSettings.removeRow(row)
 
+	def optToDict(self):
+		rows = self.twSettings.rowCount()
+		output_dict = {}
+		for row in range(rows):
+			setting = self.twSettings.item(row, 0)
+			parameter = self.twSettings.item(row, 1)
+			output_dict[setting.text()] = parameter.text()
+		return output_dict
+
 	def switchTor(self):
 		if values["torEnabled"]:
 			values["torEnabled"] = False
@@ -41,6 +50,7 @@ class MainWindow(QMainWindow):
 			values["torEnabled"] = True
 			self.btnSwitchTor.setText("Stop Tor")
 			self.lblSwitchTor.setText("Tor Running")
+			self.optToDict()
 
 if __name__ == "__main__":
 	app = QApplication(sys.argv)
