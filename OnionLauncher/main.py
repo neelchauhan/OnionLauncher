@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 from PyQt5.uic import loadUi
 from var import values
 
@@ -13,6 +13,7 @@ class MainWindow(QMainWindow):
 			self.tbAdd: self.addRow,
 			self.tbRemove: self.removeRow,
 			self.btnSwitchTor: self.switchTor,
+			self.btnAbout: self.showAbout
 		}
 
 		self.evAddClick(buttons)
@@ -51,6 +52,12 @@ class MainWindow(QMainWindow):
 			self.btnSwitchTor.setText("Stop Tor")
 			self.lblSwitchTor.setText("Tor Running")
 			self.optToDict()
+
+	def showAbout(self):
+		message = "About OnionLauncher\n\n" \
+				"Copyright 2016 Neel Chauhan\n" \
+				"https://github.com/neelchauhan/OnionLauncher"
+		QMessageBox.information(self, "Information", message)
 
 if __name__ == "__main__":
 	app = QApplication(sys.argv)
