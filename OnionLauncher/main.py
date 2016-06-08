@@ -2,6 +2,7 @@ import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 from PyQt5.uic import loadUi
 from var import values
+import torctl
 
 class MainWindow(QMainWindow):
 	def __init__(self, *args):
@@ -39,7 +40,7 @@ class MainWindow(QMainWindow):
 		for row in range(rows):
 			setting = self.twSettings.item(row, 0)
 			parameter = self.twSettings.item(row, 1)
-			output_dict[setting.text()] = parameter.text()
+			output_dict[setting.text()] = parameter.text().split()
 		return output_dict
 
 	def switchTor(self):
@@ -47,11 +48,13 @@ class MainWindow(QMainWindow):
 			values["torEnabled"] = False
 			self.btnSwitchTor.setText("Start Tor")
 			self.lblSwitchTor.setText("Tor Not Running")
+			torctl.stopTor(values["process_desc"])
 		else:
 			values["torEnabled"] = True
 			self.btnSwitchTor.setText("Stop Tor")
 			self.lblSwitchTor.setText("Tor Running")
-			self.optToDict()
+			values["process_desc"] = torctl.startTor(self.optToDict())
+		QApplication.processEvents()
 
 	def showAbout(self):
 		message = "About OnionLauncher\n\n" \

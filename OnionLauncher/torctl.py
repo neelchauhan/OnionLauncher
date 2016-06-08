@@ -6,5 +6,5 @@ def startTor(config):
 	return process
 
 def stopTor(process):
-	if "kil" in dir(process):
+	if "kill" in dir(process):
 		process.kill()
