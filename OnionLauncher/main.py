@@ -1,7 +1,7 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 from PyQt5.uic import loadUi
-from var import values
+from var import values, version
 import torctl
 
 class MainWindow(QMainWindow):
@@ -57,7 +57,7 @@ class MainWindow(QMainWindow):
 		QApplication.processEvents()
 
 	def showAbout(self):
-		message = "About OnionLauncher\n\n" \
+		message = "About OnionLauncher " + version + "\n\n" \
 				"Copyright 2016 Neel Chauhan\n" \
 				"https://github.com/neelchauhan/OnionLauncher"
 		QMessageBox.information(self, "Information", message)
