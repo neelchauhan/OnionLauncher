@@ -55,7 +55,6 @@ class MainWindow(QMainWindow):
 				values["torEnabled"] = True
 				self.btnSwitchTor.setText("Stop Tor")
 				self.lblSwitchTor.setText("Tor Running")
-				values["process_desc"] = torctl.startTor(self, self.optToDict())
 		QApplication.processEvents()
 
 	def showAbout(self):
