@@ -25,5 +25,5 @@ different in the following:
  * TorNova has logfile and circuit viewing. OnionLauncher would require third
    party programs (like [arm](https://www.torproject.org/projects/arm.html.en)
    to get this functionality).
- * TorNova does automatically saves preferences. OnionLauncher does not (at the
+ * TorNova automatically saves preferences. OnionLauncher does not (at the
    current moment).
