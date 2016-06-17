@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Encoding=UTF-8
+Name=OnionLauncher
+Comment=Launcher for Tor
+Exec=OnionLauncher
+Icon=onionlauncher
+Terminal=false
+Categories=Network;

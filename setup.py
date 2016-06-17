@@ -16,10 +16,10 @@ setup(name="OnionLauncher",
 	install_requires=[
 		"stem",
 	],
-	#data_files=[
-	#	(sys.prefix + "/share/pixmaps", ["icons/scalable/onionlauncher.svg"]),
-	#	(sys.prefix + "/share/applications", ["data/onionlauncher.desktop"]),
-	#],
+	data_files=[
+		(sys.prefix + "/share/pixmaps", ["icons/scalable/onionlauncher.svg"]),
+		(sys.prefix + "/share/applications", ["data/onionlauncher.desktop"]),
+	],
 	classifiers=[
 		"Environment :: X11 Applications :: Qt",
 		"Intended Audience :: End Users/Desktop",
