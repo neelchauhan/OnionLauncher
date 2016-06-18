@@ -9,6 +9,17 @@ A launcher for Tor written in Python and PyQt5.
  * [Stem](https://stem.torproject.org/)
  * [PyQt5](https://www.riverbankcomputing.com/software/pyqt/download5)
 
+## Getting
+
+Provided that you have all the dependencies installed, to get OnionLauncher
+from a Git clone:
+
+	$ git clone https://github.com/neelchauhan/OnionLauncher.git
+	$ cd OnionLauncher/OnionLauncher/
+	$ python main.py
+
+Replace `python` with the name (and path, if needed) of the Python intepreter.
+
 ## OnionLauncher vs. TorNova
 
 While OnionLauncher is similar to a previous project I have done,
