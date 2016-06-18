@@ -1,6 +1,8 @@
 ![OnionLauncher Logo](logo.png)
 # OnionLauncher
 
+![OnionLauncher Screenshot](screenshot.png)
+
 A launcher for Tor written in Python and PyQt5.
 
 ## Dependencies
