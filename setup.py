@@ -12,7 +12,7 @@ setup(name="OnionLauncher",
 	url="https://www.github.com/neelchauhan/OnionLauncher/",
 	packages=["OnionLauncher"],
 	entry_points={'gui_scripts': ['OnionLauncher=OnionLauncher.main:main_loop']},
-	package_data={"OnionLauncher": ["data/*"]},
+	package_data={"OnionLauncher": ["ui_files/*"]},
 	install_requires=[
 		"stem",
 	],
