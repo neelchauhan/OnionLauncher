@@ -8,8 +8,10 @@ class MainWindow(QMainWindow):
 	def __init__(self, *args):
 		super(MainWindow, self).__init__(*args)
 
+		# Load .ui file
 		loadUi("ui_files/main.ui", self)
 
+		# Define buttons
 		buttons = {
 			self.tbAdd: self.addRow,
 			self.tbRemove: self.removeRow,
@@ -19,45 +21,52 @@ class MainWindow(QMainWindow):
 
 		self.evAddClick(buttons)
 
+	# Function to connect objects from dictionary
 	def evAddClick(self, obj_dict):
 		for obj in obj_dict:
 			obj.clicked.connect(obj_dict[obj])
 
+	# Function to add a blank row
 	def addRow(self):
-		rowPos = self.twSettings.rowCount()
+		rowPos = self.twSettings.rowCount() # Get position
 		self.twSettings.insertRow(rowPos)
 
+	# Function to delete a selected row
 	def removeRow(self):
-		rows = sorted(set(index.row() for index in self.twSettings.selectedIndexes()))
-		rows.reverse()
+		rows = sorted(set(index.row() for index in self.twSettings.selectedIndexes())) # Get selected rows
+		rows.reverse() # Reverse rows (we're deleting from last->first)
 
 		for row in rows:
 			self.twSettings.removeRow(row)
 
-	def optToDict(self):
-		rows = self.twSettings.rowCount()
+	def optToDict(self): # Function to conert options in a QTableWidget to a Python Dictionary
+		rows = self.twSettings.rowCount() # Row count (we're iterating the hard way)
 		output_dict = {}
 		for row in range(rows):
+			# Get values in two variables
 			setting = self.twSettings.item(row, 0)
 			parameter = self.twSettings.item(row, 1)
+			# Add them to dictionary
 			output_dict[setting.text()] = parameter.text().split()
 		return output_dict
 
-	def switchTor(self):
-		if values["torEnabled"]:
+	def switchTor(self): # Enable (or Disable) Tor
+		if values["torEnabled"]: # Turn off if Tor is on
 			values["torEnabled"] = False
 			self.btnSwitchTor.setText("Start Tor")
 			self.lblSwitchTor.setText("Tor Not Running")
 			torctl.stopTor(values["process_desc"])
-		else:
+		else: # Turn on Tor
 			values["process_desc"] = torctl.startTor(self, self.optToDict())
-			if values["process_desc"] != None:
+			# If Tor started correctly, then mark as "on"
+			if values["process_desc"] != None: 
 				values["torEnabled"] = True
 				self.btnSwitchTor.setText("Stop Tor")
 				self.lblSwitchTor.setText("Tor Running")
+		# Refresh elements
 		QApplication.processEvents()
 
-	def showAbout(self):
+	def showAbout(self): # Show about dialog
 		message = "About OnionLauncher " + version + "\n\n" \
 				"Copyright 2016 Neel Chauhan\n" \
 				"https://github.com/neelchauhan/OnionLauncher"
