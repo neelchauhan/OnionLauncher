@@ -3,13 +3,14 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 from PyQt5.uic import loadUi
 from var import values, version
 import torctl
+from fn_handle import detect_filename
 
 class MainWindow(QMainWindow):
 	def __init__(self, *args):
 		super(MainWindow, self).__init__(*args)
 
 		# Load .ui file
-		loadUi("ui_files/main.ui", self)
+		loadUi(detect_filename("ui_files/main.ui"), self)
 
 		# Define buttons
 		buttons = {
