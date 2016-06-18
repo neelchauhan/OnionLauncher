@@ -72,8 +72,11 @@ class MainWindow(QMainWindow):
 				"https://github.com/neelchauhan/OnionLauncher"
 		QMessageBox.information(self, "Information", message)
 
-if __name__ == "__main__":
+def main_loop():
 	app = QApplication(sys.argv)
 	mw = MainWindow()
 	mw.show()
 	sys.exit(app.exec_())
+
+if __name__ == "__main__":
+	main_loop()
