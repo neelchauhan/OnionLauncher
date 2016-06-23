@@ -22,6 +22,11 @@ from a Git clone:
 
 Replace `python` with the name (and path, if needed) of the Python intepreter.
 
+## Usage
+
+A usage guide can be found on
+[the author's website](https://www.neelc.org/onionlauncher-guide.html).
+
 ## OnionLauncher vs. TorNova
 
 While OnionLauncher is similar to a previous project I have done,
