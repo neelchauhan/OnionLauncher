@@ -4,7 +4,7 @@ from setuptools import setup
 import sys
 
 setup(name="OnionLauncher",
-	version="0.0.1",
+	version="0.0.2",
 	description="Launcher for Tor",
 	license = "BSD",
 	author="Neel Chauhan",
