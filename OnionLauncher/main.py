@@ -27,6 +27,10 @@ class MainWindow(QMainWindow):
 		for obj in obj_dict:
 			obj.clicked.connect(obj_dict[obj])
 
+	# Function to set objects enabled or not
+	def evSetListEnabled(self, lst, state):
+		for item in lst:
+			item.setEnabled(state)
 	# Function to add a blank row
 	def addRow(self):
 		rowPos = self.twSettings.rowCount() # Get position
@@ -52,10 +56,16 @@ class MainWindow(QMainWindow):
 		return output_dict
 
 	def switchTor(self): # Enable (or Disable) Tor
+		modList = [
+			self.twSettings,
+			self.tbAdd,
+			self.tbRemove
+		]
 		if values["torEnabled"]: # Turn off if Tor is on
 			values["torEnabled"] = False
 			self.btnSwitchTor.setText("Start Tor")
 			self.lblSwitchTor.setText("Tor Not Running")
+			self.evSetListEnabled(modList, True)
 			torctl.stopTor(values["process_desc"])
 		else: # Turn on Tor
 			values["process_desc"] = torctl.startTor(self, self.optToDict())
@@ -64,6 +74,7 @@ class MainWindow(QMainWindow):
 				values["torEnabled"] = True
 				self.btnSwitchTor.setText("Stop Tor")
 				self.lblSwitchTor.setText("Tor Running")
+				self.evSetListEnabled(modList, False)
 		# Refresh elements
 		QApplication.processEvents()
 
