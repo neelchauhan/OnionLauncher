@@ -2,6 +2,15 @@
 
 from setuptools import setup
 import sys
+import platform
+
+if (platform.system() != "Windows") or (platform.system() != "Darwin"):
+	my_data_files = [
+		(sys.prefix + "/share/pixmaps", ["icons/scalable/onionlauncher.svg"]),
+		(sys.prefix + "/share/applications", ["data/onionlauncher.desktop"]),
+	]
+else:
+	my_data_files = []
 
 setup(name="OnionLauncher",
 	version="0.0.2",
@@ -16,10 +25,7 @@ setup(name="OnionLauncher",
 	install_requires=[
 		"stem",
 	],
-	data_files=[
-		(sys.prefix + "/share/pixmaps", ["icons/scalable/onionlauncher.svg"]),
-		(sys.prefix + "/share/applications", ["data/onionlauncher.desktop"]),
-	],
+	data_files=my_data_files,
 	classifiers=[
 		"Environment :: X11 Applications :: Qt",
 		"Intended Audience :: End Users/Desktop",
