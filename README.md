@@ -13,8 +13,8 @@ A launcher for Tor written in Python and PyQt5.
 
 ## Getting
 
-Provided that you have all the dependencies installed, to get OnionLauncher
-from a Git clone:
+Provided that you have all the dependencies installed, to get and launch
+OnionLauncher from a Git clone:
 
 	$ git clone https://github.com/neelchauhan/OnionLauncher.git
 	$ cd OnionLauncher/OnionLauncher/
