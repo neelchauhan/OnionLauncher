@@ -52,7 +52,8 @@ class MainWindow(QMainWindow):
 			setting = self.twSettings.item(row, 0)
 			parameter = self.twSettings.item(row, 1)
 			# Add them to dictionary
-			output_dict[setting.text()] = parameter.text().split()
+			if setting is not None:
+				output_dict[setting.text()] = parameter.text().split()
 		return output_dict
 
 	def switchTor(self): # Enable (or Disable) Tor
