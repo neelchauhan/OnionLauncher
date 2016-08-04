@@ -52,7 +52,7 @@ class MainWindow(QMainWindow):
 			setting = self.twSettings.item(row, 0)
 			parameter = self.twSettings.item(row, 1)
 			# Add them to dictionary
-			if setting is not None:
+			if setting is not None and parameter is not None:
 				output_dict[setting.text()] = parameter.text().split()
 		return output_dict
 
