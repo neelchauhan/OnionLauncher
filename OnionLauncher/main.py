@@ -1,7 +1,5 @@
 import os, sys, time
 import re
-from PyQt5.QtCore import Qt
-
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 from PyQt5.uic import loadUi
 from var import values, version
