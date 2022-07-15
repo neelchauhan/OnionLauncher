@@ -1,4 +1,6 @@
 import sys
+from PyQt5.QtCore import Qt
+
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 from PyQt5.uic import loadUi
 from var import values, version
@@ -43,7 +45,7 @@ class MainWindow(QMainWindow):
 			item.setEnabled(state)
 
 	def useBridge(self, state):
-		if state == Qt.Checked:
+		if self.CheckIsUseBridge.isChecked():
 			self.RadioUseBuiltin.setEnabled(True)
 			self.RadioUseCustom.setEnabled(True)
 		else:
@@ -65,26 +67,24 @@ class MainWindow(QMainWindow):
 	#		self.twSettings.removeRow(row)
 
 	def optToDict(self): # Function to conert options in a QTableWidget to a Python Dictionary
-		rows = self.twSettings.rowCount() # Row count (we're iterating the hard way)
+
 		output_dict = {}
-		for row in range(rows):
-			# Get values in two variables
-			setting = self.twSettings.item(row, 0)
-			parameter = self.twSettings.item(row, 1)
-			# Add them to dictionary
-			if setting is not None and parameter is not None:
-				output_dict[setting.text()] = parameter.text().split()
+		bridges_list = self.EditorOfBridge.toPlainText().split("\n")
+
+		proxies_list = self.EditorOfProxy.toPlainText().split("\n")
+
+		
 		return output_dict
 
 	def switchTor(self): # Enable (or Disable) Tor
 		modList = [
 
-			self.CheckIsUseBridge
+			self.CheckIsUseBridge,
 			self.RadioUseBuiltin,
-			self.RadioUseCustom
-			self.EditorOfBridge
+			self.RadioUseCustom,
+			self.EditorOfBridge,
 
-			self.CheckIsUseProxy
+			self.CheckIsUseProxy,
 			self.EditorOfProxy
 
 		]
