@@ -183,7 +183,7 @@ class MainWindow(QMainWindow):
 				time.sleep(0.2)
 
 			tor_controller = stem.control.Controller.from_socket_file(control_socket_path)
-			tor_controller.authenticate(Common.control_cookie_path)
+			tor_controller.authenticate(control_cookie_path)
 
 
 			bootstrap_percent = 0
@@ -208,7 +208,6 @@ class MainWindow(QMainWindow):
 		# Refresh elements
 		QApplication.processEvents()
 
-		if values["torEnabled"]:
 
 
 	def showAbout(self): # Show about dialog
