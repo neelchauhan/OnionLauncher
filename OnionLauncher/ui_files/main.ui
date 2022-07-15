@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>264</width>
-    <height>336</height>
+    <width>805</width>
+    <height>551</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,17 +25,17 @@
        </widget>
       </item>
       <item>
-       <spacer name="hsTorStatus">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+       <widget class="QProgressBar" name="TorProgress">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
+        <property name="value">
+         <number>24</number>
         </property>
-       </spacer>
+       </widget>
       </item>
       <item>
        <widget class="QLabel" name="lblSwitchTor">
@@ -47,35 +47,127 @@
      </layout>
     </item>
     <item>
-     <widget class="QTableWidget" name="twSettings">
-      <column>
-       <property name="text">
-        <string>Setting</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Parameter</string>
-       </property>
-      </column>
-     </widget>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <layout class="QFormLayout" name="formLayout_2">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Bridges Settings</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="checkBox">
+            <property name="text">
+             <string>Use Bridges</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QRadioButton" name="radioButton">
+            <property name="text">
+             <string>Connect with built-in bridges</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QRadioButton" name="radioButton_2">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Connect with your custom bridges</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0" colspan="2">
+           <widget class="QPlainTextEdit" name="plainTextEdit">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="placeholderText">
+             <string>Please Enter your bridges infomation...</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QFormLayout" name="formLayout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Proxy Settings</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="checkBox_2">
+            <property name="text">
+             <string>Use Proxies</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="2">
+           <widget class="QPlainTextEdit" name="plainTextEdit_2">
+            <property name="placeholderText">
+             <string>Please Enter your proxies information...</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_6">
+        <item>
+         <layout class="QFormLayout" name="formLayout_3">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_3">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Tor status Log</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QTextBrowser" name="textBrowser"/>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+     </layout>
     </item>
     <item>
      <layout class="QHBoxLayout" name="hlAddRemove">
-      <item>
-       <widget class="QToolButton" name="tbAdd">
-        <property name="text">
-         <string>+</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QToolButton" name="tbRemove">
-        <property name="text">
-         <string>-</string>
-        </property>
-       </widget>
-      </item>
       <item>
        <spacer name="hsAddRemove">
         <property name="orientation">
