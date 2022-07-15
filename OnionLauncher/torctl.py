@@ -16,7 +16,7 @@ def startTor(parent, config_dict):
 
 			mod_torrc_textlist = [tmp for tmp in torrc_textlist if all(map(lambda x: not tmp.startswith(x) , eliminated_directive))]
 
-			
+			mod_torrc_textlist.extend(config_dict["bridges_list"]).extend(config_dict["proxies_list"])
 
 			with open(TORRC_PATH, "w") as f:
 				f.writelines(mod_torrc_textlist)
