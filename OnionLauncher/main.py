@@ -14,35 +14,55 @@ class MainWindow(QMainWindow):
 
 		# Define buttons
 		buttons = {
-			self.tbAdd: self.addRow,
-			self.tbRemove: self.removeRow,
 			self.btnSwitchTor: self.switchTor,
 			self.btnAbout: self.showAbout
 		}
 
+		# Define Checkbox
+		checkboxes = {
+			self.CheckIsUseBridge: self.useBridge
+
+		}
+
 		self.evAddClick(buttons)
+		self.evSwitchCheck(checkboxes)
 
 	# Function to connect objects from dictionary
 	def evAddClick(self, obj_dict):
 		for obj in obj_dict:
 			obj.clicked.connect(obj_dict[obj])
 
+	def evSwitchCheck(self, obj_check):
+		for obj in obj_check:
+			obj.stateChanged.connect(obj_check[obj])
+		
+
 	# Function to set objects enabled or not
 	def evSetListEnabled(self, lst, state):
 		for item in lst:
 			item.setEnabled(state)
+
+	def useBridge(self, state):
+		if state == Qt.Checked:
+			self.RadioUseBuiltin.setEnabled(True)
+			self.RadioUseCustom.setEnabled(True)
+		else:
+			self.RadioUseBuiltin.setEnabled(False)
+			self.RadioUseCustom.setEnabled(False)
+
+
 	# Function to add a blank row
-	def addRow(self):
-		rowPos = self.twSettings.rowCount() # Get position
-		self.twSettings.insertRow(rowPos)
+	#def addRow(self):
+	#	rowPos = self.twSettings.rowCount() # Get position
+	#	self.twSettings.insertRow(rowPos)
 
 	# Function to delete a selected row
-	def removeRow(self):
-		rows = sorted(set(index.row() for index in self.twSettings.selectedIndexes())) # Get selected rows
-		rows.reverse() # Reverse rows (we're deleting from last->first)
+	#def removeRow(self):
+	#	rows = sorted(set(index.row() for index in self.twSettings.selectedIndexes())) # Get selected rows
+	#	rows.reverse() # Reverse rows (we're deleting from last->first)
 
-		for row in rows:
-			self.twSettings.removeRow(row)
+	#	for row in rows:
+	#		self.twSettings.removeRow(row)
 
 	def optToDict(self): # Function to conert options in a QTableWidget to a Python Dictionary
 		rows = self.twSettings.rowCount() # Row count (we're iterating the hard way)
@@ -58,31 +78,38 @@ class MainWindow(QMainWindow):
 
 	def switchTor(self): # Enable (or Disable) Tor
 		modList = [
-			self.twSettings,
-			self.tbAdd,
-			self.tbRemove
+
+			self.CheckIsUseBridge
+			self.RadioUseBuiltin,
+			self.RadioUseCustom
+			self.EditorOfBridge
+
+			self.CheckIsUseProxy
+			self.EditorOfProxy
+
 		]
 		if values["torEnabled"]: # Turn off if Tor is on
 			values["torEnabled"] = False
 			self.btnSwitchTor.setText("Start Tor")
 			self.lblSwitchTor.setText("Tor Not Running")
 			self.evSetListEnabled(modList, True)
-			torctl.stopTor(values["process_desc"])
+			torctl.stopTor()
 		else: # Turn on Tor
-			values["process_desc"] = torctl.startTor(self, self.optToDict())
+			torctl.startTor(self, self.optToDict())
 			# If Tor started correctly, then mark as "on"
-			if values["process_desc"] != None: 
-				values["torEnabled"] = True
-				self.btnSwitchTor.setText("Stop Tor")
-				self.lblSwitchTor.setText("Tor Running")
-				self.evSetListEnabled(modList, False)
+			values["torEnabled"] = True
+			self.btnSwitchTor.setText("Stop Tor")
+			self.lblSwitchTor.setText("Tor Running")
+			self.evSetListEnabled(modList, False)
 		# Refresh elements
 		QApplication.processEvents()
 
 	def showAbout(self): # Show about dialog
 		message = "About OnionLauncher " + version + "\n\n" \
 				"Copyright 2016 Neel Chauhan\n" \
-				"https://github.com/neelchauhan/OnionLauncher"
+				"This Version is modified by @infoengine1337\n" \
+				"https://github.com/infoengine1337/OnionLauncher"
+
 		QMessageBox.information(self, "Information", message)
 
 def main_loop():
