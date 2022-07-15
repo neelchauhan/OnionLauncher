@@ -1,4 +1,5 @@
-import sys
+import os, sys, time
+import re
 from PyQt5.QtCore import Qt
 
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
@@ -6,6 +7,17 @@ from PyQt5.uic import loadUi
 from var import values, version
 import torctl
 from fn_handle import detect_filename
+
+import stem
+import stem.control
+import stem.socket
+from stem.connection import connect
+
+control_cookie_path = '/var/lib/tor/control.authcookie'
+control_socket_path = '/run/tor/control'
+
+
+
 
 class MainWindow(QMainWindow):
 	def __init__(self, *args):
@@ -87,18 +99,32 @@ class MainWindow(QMainWindow):
         ]
 
 		output_dict = {}
-		if self.RadioUseBuiltin.isChecked():
-			bridges_list = builtin_torbridges_list
-		else:
-			bridges_list = self.EditorOfBridge.toPlainText().split("\n")
-			
-		proxies_list = self.EditorOfProxy.toPlainText().split("\n")
+		bridges_list = []
+		proxies_list =  []
 
-		output_dict.update[("bridges_list", bridges_list), ("proxies_list", proxies_list)])
+		if self.CheckIsUseBridge.isChecked():
+
+			bridges_list.extend(["UseBridges 1","ClientTransportPlugin obfs2,obfs3 exec /usr/bin/obfsproxy managed","ClientTransportPlugin obfs4 exec /usr/bin/obfs4proxy managed"])
+
+			if self.RadioUseBuiltin.isChecked():
+				bridges_list.extend(builtin_torbridges_list)
+			else:
+				bridges_list.extend(self.EditorOfBridge.toPlainText().split("\n"))
+
+		else:
+			bridges_list.extend(["UseBridges 0"])
+
+			
+		if self.CheckIsUseBridge.isChecked():
+			proxies_list = self.EditorOfProxy.toPlainText().split("\n")
+
+		output_dict.update[("bridges_list", bridges_list), ("proxies_list", proxies_list)]
 		
 		return output_dict
 
+
 	def switchTor(self): # Enable (or Disable) Tor
+		
 		modList = [
 
 			self.CheckIsUseBridge,
@@ -110,6 +136,33 @@ class MainWindow(QMainWindow):
 			self.EditorOfProxy
 
 		]
+
+		tag_phase = {'starting': 'Starting',
+                    'conn': 'Connecting to a relay',
+                    'conn_dir': 'Connecting to a relay directory',
+                    'conn_done_pt': "Connected to pluggable transport",
+                    'handshake_dir': 'Finishing handshake with directory server',
+                    'onehop_create': 'Establishing an encrypted directory connection',
+                    'requesting_status': 'Retrieving network status',
+                    'loading_status': 'Loading network status',
+                    'loading_keys': 'Loading authority certificates',
+                    'enough_dirinfo': 'Loaded enough directory info to build circuits',
+                    'ap_conn': 'Connecting to a relay to build circuits',
+                    'ap_conn_done': 'Connected to a relay to build circuits',
+                    'ap_conn_done_pt': 'Connected to pluggable transport to build circuits',
+                    'ap_handshake': 'Finishing handshake with a relay to build circuits',
+                    'ap_handshake_done': 'Handshake finished with a relay to build circuits',
+                    'requesting_descriptors': 'Requesting relay information',
+                    'loading_descriptors': 'Loading relay information',
+                    'conn_or': 'Connecting to the Tor network',
+                    'conn_done': "Connected to a relay",
+                    'handshake': "Handshaking with a relay",
+                    'handshake_or': 'Finishing handshake with first hop',
+                    'circuit_create': 'Establishing a Tor circuit',
+                    'done': 'Connected to the Tor network!'
+					}
+
+
 		if values["torEnabled"]: # Turn off if Tor is on
 			values["torEnabled"] = False
 			self.btnSwitchTor.setText("Start Tor")
@@ -123,8 +176,40 @@ class MainWindow(QMainWindow):
 			self.btnSwitchTor.setText("Stop Tor")
 			self.lblSwitchTor.setText("Tor Running")
 			self.evSetListEnabled(modList, False)
+
+			count=0
+			while not os.path.exists(control_socket_path) and count < 5:
+				count += 0.2
+				time.sleep(0.2)
+
+			tor_controller = stem.control.Controller.from_socket_file(control_socket_path)
+			tor_controller.authenticate(Common.control_cookie_path)
+
+
+			bootstrap_percent = 0
+			while bootstrap_percent < 100:
+				bootstrap_status = tor_controller.get_info("status/bootstrap-phase")
+
+				if bootstrap_status != previous_status:
+					bootstrap_percent = int(re.match('.* PROGRESS=([0-9]+).*', bootstrap_status).group(1))
+					bootstrap_tag = re.search(r'TAG=(.*) +SUMMARY', bootstrap_status).group(1)
+
+					if bootstrap_tag in tag_phase:
+						bootstrap_phase = tag_phase[bootstrap_tag]
+
+					previous_status = bootstrap_status
+				
+				self.TorProgress.setValue(bootstrap_percent)
+				self.textBrowser.setText(self.textBrowser.toPlainText() + "{}\n".format(bootstrap_tag))
+
+				QApplication.processEvents()
+				time.sleep(0.2)
+
 		# Refresh elements
 		QApplication.processEvents()
+
+		if values["torEnabled"]:
+
 
 	def showAbout(self): # Show about dialog
 		message = "About OnionLauncher " + version + "\n\n" \

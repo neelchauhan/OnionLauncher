@@ -107,8 +107,14 @@
              </sizepolicy>
             </property>
             <property name="plainText">
-             <string>hoge
-</string>
+             <string>#UseBridges 1
+#ClientTransportPlugin obfs2,obfs3 exec /usr/bin/obfsproxy managed
+#ClientTransportPlugin obfs4 exec /usr/bin/obfs4proxy managed
+#bridge 192.168.255.1:443
+#bridge 24.22.1.54:443
+#bridge obfs2 209.176.111.47:42105
+#bridge obfs3 199.241.31.96:12873
+#bridge obfs4 141.201.27.48:420 gibberish cert=more-gibberish iat-mode=0</string>
             </property>
             <property name="placeholderText">
              <string>Please Enter your bridges infomation...</string>
@@ -144,6 +150,13 @@
           </item>
           <item row="2" column="0" colspan="2">
            <widget class="QPlainTextEdit" name="EditorOfProxy">
+            <property name="plainText">
+             <string>#HTTPSProxy 192.168.1.44:443
+#Socks4Proxy 10.0.1.3:1080
+#Socks5Proxy 172.1.3.3:1080
+#Socks5ProxyUsername username
+#Socks5ProxyPassword password</string>
+            </property>
             <property name="placeholderText">
              <string>Please Enter your proxies information...</string>
             </property>
