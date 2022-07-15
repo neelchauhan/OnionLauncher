@@ -5,6 +5,8 @@ def startTor(parent, config_dict):
 
 	TORRC_PATH = "/etc/tor/torrc"
 
+	eliminated_directive = ["UseBridges", "ClientTransportPlugin", "ClientTransportPlugin", "bridge", "Bridge", "HTTPSProxy", "HTTPSProxyAuthenticator", "Socks4Proxy", "Socks5Proxy", "Socks5ProxyUsername", "Socks5ProxyPassword"]
+
 	try:
 
 		if os.path.exists(TORRC_PATH) and os.path.isfile(TORRC_PATH):
@@ -12,9 +14,12 @@ def startTor(parent, config_dict):
 			with open(TORRC_PATH, "r") as f:
 				torrc_textlist = f.readlines()
 
+			mod_torrc_textlist = [tmp for tmp in torrc_textlist if all(map(lambda x: not tmp.startswith(x) , eliminated_directive))]
+
 			
+
 			with open(TORRC_PATH, "w") as f:
-				f.writelines(torrc_textlist)
+				f.writelines(mod_torrc_textlist)
 
 			command = 'systemctl start tor'
 			os.system(command)
