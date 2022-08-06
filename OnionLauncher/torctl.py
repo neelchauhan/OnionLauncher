@@ -1,22 +1,37 @@
-import stem.process
+import os
 from PyQt5.QtWidgets import QMessageBox
 
-def startTor(parent, config):
-	process = None # Start with a blank process descriptor
+def startTor(parent, config_dict):
+
+	torrc_path = "/etc/tor/torrc"
+
+	eliminated_directive = ["UseBridges", "ClientTransportPlugin", "ClientTransportPlugin", "bridge", "Bridge", "HTTPSProxy", "HTTPSProxyAuthenticator", "Socks4Proxy", "Socks5Proxy", "Socks5ProxyUsername", "Socks5ProxyPassword"]
+
 	try:
-		if config: # Start with a configuration
-			process = stem.process.launch_tor_with_config(config, take_ownership = True)
-		else: # Start with a default configuration if the values are blank
-			default_config = {
-				"SocksPort": "9050"
-			}
-			process = stem.process.launch_tor_with_config(default_config, take_ownership = True)
-	except OSError as err_m: # Output error if one is encountered
-		QMessageBox.critical(parent, "Error", str(err_m))
 
-	return process
+		if os.path.exists(torrc_path) and os.path.isfile(torrc_path):
+				
+			with open(torrc_path, "r") as f:
+				torrc_textlist = f.readlines()
 
-def stopTor(process):
+			mod_torrc_textlist = [tmp for tmp in torrc_textlist if all(map(lambda x: not tmp.startswith(x) , eliminated_directive))]
+
+			mod_torrc_textlist.extend(config_dict["bridges_list"]).extend(config_dict["proxies_list"])
+
+			with open(torrc_path, "w") as f:
+				f.writelines(mod_torrc_textlist)
+
+			command = "systemctl start tor"
+			os.system(command)
+
+		else:
+			QMessageBox.critical(parent, "Error", "torrc file does not exist.")
+
+	except: # Output error if one is encountered
+		QMessageBox.critical(parent, "Error", "an error happened.")
+
+
+def stopTor():
 	# Stop Tor if it is an option in the process descriptor
-	if "kill" in dir(process):
-		process.kill()
+	command = "systemctl stop tor"
+	os.system(command)

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>264</width>
-    <height>336</height>
+    <width>805</width>
+    <height>551</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,17 +25,17 @@
        </widget>
       </item>
       <item>
-       <spacer name="hsTorStatus">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+       <widget class="QProgressBar" name="TorProgress">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
+        <property name="value">
+         <number>24</number>
         </property>
-       </spacer>
+       </widget>
       </item>
       <item>
        <widget class="QLabel" name="lblSwitchTor">
@@ -47,35 +47,153 @@
      </layout>
     </item>
     <item>
-     <widget class="QTableWidget" name="twSettings">
-      <column>
-       <property name="text">
-        <string>Setting</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Parameter</string>
-       </property>
-      </column>
-     </widget>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <layout class="QFormLayout" name="formLayout_2">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Bridges Settings</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="CheckIsUseBridge">
+            <property name="text">
+             <string>Use Bridges</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QRadioButton" name="RadioUseBuiltin">
+            <property name="text">
+             <string>Connect with built-in bridges</string>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">buttonGroup</string>
+            </attribute>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QRadioButton" name="RadioUseCustom">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Connect with your custom bridges</string>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">buttonGroup</string>
+            </attribute>
+           </widget>
+          </item>
+          <item row="3" column="0" colspan="2">
+           <widget class="QPlainTextEdit" name="EditorOfBridge">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="plainText">
+             <string>#UseBridges 1
+#ClientTransportPlugin obfs2,obfs3 exec /usr/bin/obfsproxy managed
+#ClientTransportPlugin obfs4 exec /usr/bin/obfs4proxy managed
+#bridge 192.168.255.1:443
+#bridge 24.22.1.54:443
+#bridge obfs2 209.176.111.47:42105
+#bridge obfs3 199.241.31.96:12873
+#bridge obfs4 141.201.27.48:420 gibberish cert=more-gibberish iat-mode=0</string>
+            </property>
+            <property name="placeholderText">
+             <string>Please Enter your bridges infomation...</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QFormLayout" name="formLayout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Proxy Settings</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="CheckIsUseProxy">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="text">
+             <string>Use Proxies</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="2">
+           <widget class="QPlainTextEdit" name="EditorOfProxy">
+            <property name="plainText">
+             <string>#HTTPSProxy 192.168.1.44:443
+#Socks4Proxy 10.0.1.3:1080
+#Socks5Proxy 172.1.3.3:1080
+#Socks5ProxyUsername username
+#Socks5ProxyPassword password</string>
+            </property>
+            <property name="placeholderText">
+             <string>Please Enter your proxies information...</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_6">
+        <item>
+         <layout class="QFormLayout" name="formLayout_3">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_3">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Tor status Log</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QTextBrowser" name="textBrowser"/>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+     </layout>
     </item>
     <item>
      <layout class="QHBoxLayout" name="hlAddRemove">
-      <item>
-       <widget class="QToolButton" name="tbAdd">
-        <property name="text">
-         <string>+</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QToolButton" name="tbRemove">
-        <property name="text">
-         <string>-</string>
-        </property>
-       </widget>
-      </item>
       <item>
        <spacer name="hsAddRemove">
         <property name="orientation">
@@ -103,4 +221,7 @@
  </widget>
  <resources/>
  <connections/>
+ <buttongroups>
+  <buttongroup name="buttonGroup"/>
+ </buttongroups>
 </ui>
